@@ -16,7 +16,7 @@ You can type to narrow the selection and then select a project to open its folde
 
 To install clone this repository into your Sublime Text 3 packages directory.
 
-You can find this directory via <kdb>Preferences</kdb> > <kbd>Browse Packages...</kbd>
+You can find this directory via <kbd>Preferences</kbd> > <kbd>Browse Packages...</kbd>
 
 cd into this directory in your terminal and run:
 ```shell
