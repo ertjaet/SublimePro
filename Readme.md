@@ -1,6 +1,6 @@
 # SublimePro
 
-SublimePro is a Sublime Text 3 plugin that lets you quickly open [pro](https://github.com/trishume/pro) projects
+SublimePro is a Sublime Text 2 plugin that lets you quickly open [pro](https://github.com/trishume/pro) projects
 in Sublime Text.
 
 # Usage
@@ -14,7 +14,7 @@ You can type to narrow the selection and then select a project to open its folde
 
 # Installation
 
-To install clone this repository into your Sublime Text 3 packages directory.
+To install clone this repository into your Sublime Text 2 packages directory.
 
 You can find this directory via <kbd>Preferences</kbd> > <kbd>Browse Packages...</kbd>
 
