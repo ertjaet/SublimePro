@@ -6,7 +6,6 @@ import subprocess
 import os
 import shutil
 import locale
-from threading import Timer, Thread
 
 SUBL_PATH = '../SharedSupport/bin/subl'
 ENCODING = 'utf-8'
@@ -14,8 +13,7 @@ ENCODING = 'utf-8'
 
 class OpenProCommand(sublime_plugin.WindowCommand):
     def run(self):
-        t1 = Thread(target=self.open_project_panel)
-        t1.start()
+        self.open_project_panel()
 
     def open_project_panel(self):
         projects = self.project_list()
@@ -26,7 +24,7 @@ class OpenProCommand(sublime_plugin.WindowCommand):
         return [[os.path.basename(p), p] for p in paths]
 
     def project_paths(self):
-        result = communicate(["pro","list"],timeout=2)
+        result = communicate(["pro","list"])
         self.projects = result.split("\n")
         return self.projects
 
@@ -44,10 +42,11 @@ class OpenProCommand(sublime_plugin.WindowCommand):
 # hack to add folders to sidebar (stolen from wbond)
 def get_sublime_path():
     if sublime.platform() == 'osx':
-        base_dir = os.path.dirname(sublime.executable_path())
-        return os.path.relpath(SUBL_PATH, base_dir)
-    else:  # I hope this works on Windows and Linux
-        return sublime.executable_path()
+        return '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
+    elif sublime.platform() == 'linux':
+        return open('/proc/self/cmdline').read().split(chr(0))[0]
+    else:
+        return sys.executable
 
 
 def sublime_command_line(args):
@@ -69,8 +68,8 @@ def memoize(f):
 
 def extract_path(cmd, delim=':'):
     path = popen(cmd, os.environ).communicate()[0]
-    path = path.decode('utf-8')
     path = path.split('__SUBL__', 1)[1].strip('\r\n')
+    print(path)
     return ':'.join(path.split(delim))
 
 def find_path(env):
@@ -121,17 +120,8 @@ def which(cmd, env=None):
 def communicate(cmd, stdin=None, timeout=None, **popen_args):
   p = popen(cmd, **popen_args)
   if isinstance(p, subprocess.Popen):
-    timer = None
-    if timeout is not None:
-      kill = lambda: p.kill()
-      timer = Timer(timeout, kill)
-      timer.start()
-
     out = p.communicate(stdin)
-    if timer is not None:
-      timer.cancel()
-
-    return (out[0] or b'').decode(ENCODING) + (out[1] or b'').decode(ENCODING)
+    return (out[0] or '') + (out[1] or '')
   elif isinstance(p, str):
     return p
   else:
