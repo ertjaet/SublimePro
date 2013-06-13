@@ -1,7 +1,6 @@
 # SublimePro
 
-SublimePro is a Sublime Text 2 plugin that lets you quickly open [pro](https://github.com/trishume/pro) projects
-in Sublime Text.
+SublimePro is a Sublime Text 2 plugin that lets you quickly open [pro](https://github.com/trishume/pro) projects in Sublime Text. It works 60% of the time, every time!
 
 # Usage
 
