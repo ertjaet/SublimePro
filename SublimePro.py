@@ -71,7 +71,6 @@ def memoize(f):
 def extract_path(cmd, delim=':'):
     path = popen(cmd, os.environ).communicate()[0]
     path = path.split('__SUBL__', 1)[1].strip('\r\n')
-    print(path)
     return ':'.join(path.split(delim))
 
 
